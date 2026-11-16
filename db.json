@@ -1,7 +1,23 @@
 {
   "users": [
-    { "id": 1, "name": "Jonas Jonaitis", "email": "jonas@example.com", "password": "jonas123" },
-    { "id": 2, "name": "Ona Onaitė", "email": "ona@example.com", "password": "ona123" }
+    {
+      "id": 1,
+      "name": "Jonas Jonaitis",
+      "email": "jonas@example.com",
+      "password": "jonas123"
+    },
+    {
+      "id": 2,
+      "name": "Ona Onaitė",
+      "email": "ona@example.com",
+      "password": "ona123"
+    },
+    {
+      "name": "Petras",
+      "email": "petras@example.com",
+      "password": "petras123",
+      "id": 3
+    }
   ],
   "favorites": []
 }
