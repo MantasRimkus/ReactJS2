@@ -1,0 +1,7 @@
+{
+  "users": [
+    { "id": 1, "name": "Jonas Jonaitis", "email": "jonas@example.com", "password": "jonas123" },
+    { "id": 2, "name": "Ona Onaitė", "email": "ona@example.com", "password": "ona123" }
+  ],
+  "favorites": []
+}
