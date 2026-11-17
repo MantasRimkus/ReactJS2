@@ -1,16 +1,74 @@
-# React + Vite
+# Receptų programėlė (Praktinė užduotis Nr. 2)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React programėlė su registracija, prisijungimu, apsaugotais maršrutais ir asmeniniu mėgstamiausių receptų sąrašu.
+Receptai gaunami iš [DummyJSON](https://dummyjson.com/docs/recipes), naudotojai ir mėgstamiausi saugomi vietiniame `json-server`.
 
-Currently, two official plugins are available:
+## Naudotos versijos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Priemonė | Versija |
+| --- | --- |
+| Node.js | 26 |
+| React / React DOM | 19 |
+| React Router (`react-router-dom`) | 7 |
+| Vite | 8 |
+| json-server | **0.17.4** (tiksliai ši versija – 1.x versijose užklausų filtravimo sintaksė kitokia) |
 
-## React Compiler
+Tikslios įdiegtos versijos užfiksuotos `package-lock.json` faile.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Paleidimas
 
-## Expanding the ESLint configuration
+```bash
+# 1. Įdiegti priklausomybes
+npm install
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# 2. Paleisti serverį (1-as terminalas) – http://localhost:3001
+npm run server
+
+# 3. Paleisti React programėlę (2-as terminalas) – adresas rodomas terminale (pvz. http://localhost:5173)
+npm run dev
+```
+
+Abu procesai turi veikti vienu metu.
+
+## Demonstraciniai naudotojai (išgalvoti)
+
+| Vardas | El. paštas | Slaptažodis |
+| --- | --- | --- |
+| Jonas Jonaitis | jonas@example.com | jonas123 |
+| Ona Onaitė | ona@example.com | ona123 |
+
+## Maršrutai
+
+| Maršrutas | Turinys | Prieiga |
+| --- | --- | --- |
+| `/` | Pradžia | Vieša |
+| `/login` | Prisijungimas | Vieša |
+| `/register` | Registracija | Vieša |
+| `/dashboard` | Receptų sąrašas (5 per puslapį) | Tik prisijungus |
+| `/recipe/:id` | Recepto peržiūra | Tik prisijungus |
+| `/favorites` | Mėgstamiausi receptai | Tik prisijungus |
+
+## Projekto struktūra
+
+```
+src/
+  api/          – užklausos (fetch) į json-server ir DummyJSON
+  context/      – AuthContext + AuthProvider, FavoritesContext + FavoritesProvider
+  components/   – Navbar, ProtectedRoute, RecipeCard, FavoriteButton, FormField, StatusMessage
+  pages/        – Home, Login, Register, RecipeList, RecipeDetail, Favorites, NotFound
+  utils/        – formų validacija
+```
+
+## API (json-server)
+
+- `GET /users?email=...` – naudotojo paieška (registracijoje dublikatui tikrinti, prisijungime – duomenims patikrinti)
+- `POST /users` – naujas naudotojas
+- `GET /favorites?userId=...` – prisijungusio naudotojo mėgstamiausi
+- `POST /favorites` – `{ userId, recipeId, name, image }`
+- `DELETE /favorites/:id` – šalinama pagal įrašo `id`, ne pagal `recipeId`
+
+## Mokomojo sprendimo ribos
+
+Tai autentifikacijos imitacija: json-server neturi tikrų sesijų ir teisių tikrinimo, slaptažodžiai `db.json` saugomi atviru tekstu,
+o `ProtectedRoute` apsaugo tik React puslapius, bet ne serverio duomenis. Tikrame projekte reikėtų serverio autentifikacijos,
+slaptažodžių maišymo ir teisių tikrinimo kiekvienai užklausai.
