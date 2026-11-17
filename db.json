@@ -17,6 +17,12 @@
       "email": "petras@example.com",
       "password": "petras123",
       "id": 3
+    },
+    {
+      "name": "Mantas",
+      "email": "mantasrimkus@gmail.com",
+      "password": "Mantas123",
+      "id": 4
     }
   ],
   "favorites": [
@@ -26,6 +32,13 @@
       "name": "Classic Margherita Pizza",
       "image": "https://cdn.dummyjson.com/recipe-images/1.webp",
       "id": 1
+    },
+    {
+      "userId": 4,
+      "recipeId": 1,
+      "name": "Classic Margherita Pizza",
+      "image": "https://cdn.dummyjson.com/recipe-images/1.webp",
+      "id": 2
     }
   ]
 }
