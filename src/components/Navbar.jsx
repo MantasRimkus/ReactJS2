@@ -1,12 +1,43 @@
-import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 function Navbar() {
+  const { user, isAuthenticated, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login', { replace: true });
+  };
+
   return (
-    <nav>
-      <Link to="/">Pradžia</Link> | <Link to="/login">Prisijungti</Link> |{' '}
-      <Link to="/register">Registruotis</Link> | <Link to="/dashboard">Receptai</Link> |{' '}
-      <Link to="/favorites">Mėgstamiausi</Link>
-    </nav>
+    <header className="navbar">
+      <Link to={isAuthenticated ? '/dashboard' : '/'} className="navbar-brand">
+        🍲 Receptai
+      </Link>
+
+      <nav className="navbar-links">
+        {isAuthenticated ? (
+          <>
+            <NavLink to="/dashboard">Receptai</NavLink>
+            <NavLink to="/favorites">Mėgstamiausi</NavLink>
+            <span className="navbar-user">👤 {user.name}</span>
+            <button type="button" className="btn btn-outline" onClick={handleLogout}>
+              Atsijungti
+            </button>
+          </>
+        ) : (
+          <>
+            <NavLink to="/" end>
+              Pradžia
+            </NavLink>
+            <NavLink to="/login">Prisijungti</NavLink>
+            <NavLink to="/register">Registruotis</NavLink>
+          </>
+        )}
+      </nav>
+    </header>
   );
 }
 
